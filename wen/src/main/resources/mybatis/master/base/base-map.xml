@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vin.dao.BaseMapper">
+	<resultMap id="baseUserMap" type="com.vin.entity.BaseUser">
+			<id property="id" column="id"/>
+			<result property="loginName" column="loginName"/>
+			<result property="passWord" column="passWord"/>
+			<result property="userName" column="userName"/>
+	</resultMap>
+	
+	<select id="getUserInfoByCondition" resultMap="baseUserMap" parameterType="Map">
+		select * from base_user 
+		where 1=1
+		<if test="userName != null and userName != ''">
+			and userName like '%'||#{userName}||'%'
+		</if>
+		<if test="loginName != null and loginName != ''">
+			and loginName = = #{loginName}
+		</if>
+		<if test="passWord != null and passWord != ''">
+			and passWord = = #{passWord}
+		</if>
+		<if test="id != null and id != ''">
+			and id = = #{id}
+		</if>
+	</select>
+	
+</mapper>
