@@ -4,6 +4,10 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.WebInitParam;
 
+/**
+ * @Description: 监控数据库性能
+ * @date: 2018-04-28
+ */
 @WebServlet(urlPatterns = "/druid/*",   
     initParams={  
             @WebInitParam(name="allow",value="192.168.16.110,127.0.0.1"),// IP白名单 (没有配置或者为空，则允许所有访问)  

@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +50,8 @@ public class MasterDruidDSConfig {
 	@Value("${master.datasource.driverClassName}")
 	private String driverClass;
 
-	@Value("${spring.datasource.initialSize}")
+	/* 方式一
+	 * @Value("${spring.datasource.initialSize}")
 	private int initialSize;
 
 	@Value("${spring.datasource.minIdle}")
@@ -89,7 +91,10 @@ public class MasterDruidDSConfig {
 	private String filters;
 
 	@Value("{spring.datasource.connectionProperties}")
-	private String connectionProperties;
+	private String connectionProperties;*/
+	
+	@Autowired
+	DruidProperties druiProperties;
 
 	@Bean(name = "masterDataSource")
 	@Primary
@@ -101,7 +106,8 @@ public class MasterDruidDSConfig {
 		dataSource.setPassword(password);
 
 		// configuration
-		dataSource.setInitialSize(initialSize);
+		/*方式一
+		 * dataSource.setInitialSize(initialSize);
 		dataSource.setMinIdle(minIdle);
 		dataSource.setMaxActive(maxActive);
 		dataSource.setMaxWait(maxWait);
@@ -118,7 +124,28 @@ public class MasterDruidDSConfig {
 		} catch (SQLException e) {
 			logger.error("druid configuration initialization filter", e);
 		}
-		dataSource.setConnectionProperties(connectionProperties);
+		dataSource.setConnectionProperties(connectionProperties);*/
+		
+		// 方式二
+		dataSource.setInitialSize(druiProperties.getInitialSize());
+		dataSource.setMinIdle(druiProperties.getMinIdle());
+		dataSource.setMaxActive(druiProperties.getMaxActive());
+		dataSource.setMaxWait(druiProperties.getMaxWait());
+		dataSource.setTimeBetweenEvictionRunsMillis(druiProperties.getTimeBetweenEvictionRunsMillis());
+		dataSource.setMinEvictableIdleTimeMillis(druiProperties.getMinEvictableIdleTimeMillis());
+		dataSource.setValidationQuery(druiProperties.getValidationQuery());
+		dataSource.setTestWhileIdle(druiProperties.isTestWhileIdle());
+		dataSource.setTestOnBorrow(druiProperties.isTestOnBorrow());
+		dataSource.setTestOnReturn(druiProperties.isTestOnReturn());
+		dataSource.setPoolPreparedStatements(druiProperties.isPoolPreparedStatements());
+		dataSource.setMaxPoolPreparedStatementPerConnectionSize(druiProperties.getMaxPoolPreparedStatementPerConnectionSize());
+		try {
+			dataSource.setFilters(druiProperties.getFilters());
+		} catch (SQLException e) {
+			logger.error("druid configuration initialization filter", e);
+		}
+		dataSource.setConnectionProperties(druiProperties.getConnectionProperties());
+		
 		return dataSource;
 	}
 
