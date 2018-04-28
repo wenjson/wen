@@ -10,7 +10,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  * @author Vincent
  * @date 2018-04-24
  * @Description: 
- * ServletComponentScan 启动扫描Servlet，druid 监控
+ * ServletComponentScan 启动扫描Servlet，druid 监控需要
  */
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 @ServletComponentScan
