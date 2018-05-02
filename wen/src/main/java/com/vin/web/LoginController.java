@@ -40,4 +40,13 @@ public class LoginController {
 		}
 		return "用户名："+userName;
 	}
+	
+	/**
+	 * docker 测试
+	 * @return
+	 */
+	@RequestMapping("/docker")
+	public String docker(){
+		return "hello docker";
+	}
 }

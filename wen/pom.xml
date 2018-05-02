@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
-		<!-- docker -->
+		<!-- docker image name -->
 		<docker.image.prefix>wen</docker.image.prefix>
 		<docker.host>http://172.119.0.27:2375</docker.host>
 	</properties>
@@ -110,7 +110,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- docker -->
+			<!-- Docker maven plugin -->
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
