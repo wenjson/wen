@@ -14,6 +14,12 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
+/**
+ * RedisTemplate 方式操作readis
+ * 无法获取StringRedisTemplate设置的值
+ * @author Vincent
+ *
+ */
 @Service
 public class RedisUtils {
 	
@@ -49,8 +55,7 @@ public class RedisUtils {
         try {
             ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
             operations.set(key, value);
-            redisTemplate.expire(key, expireTime, timeUnit);
-            result = true;
+            result = redisTemplate.expire(key, expireTime, timeUnit);
         } catch (Exception e) {
             e.printStackTrace();
         }

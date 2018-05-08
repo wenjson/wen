@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vin.core.redis.RedisOpt;
+import com.vin.core.redis.RedisUtils;
 import com.vin.entity.BaseUser;
 import com.vin.service.BaseService;
 
@@ -17,6 +19,12 @@ public class LoginController {
 	
 	@Autowired
 	private BaseService baseService;
+	
+	@Autowired
+	private RedisUtils redisUtils;
+	
+	@Autowired
+	private RedisOpt redisOpt;
 	
 	@Value("${file_base_path}")
 	private String filePath;
@@ -48,5 +56,40 @@ public class LoginController {
 	@RequestMapping("/docker")
 	public String docker(){
 		return "hello docker";
+	}
+	
+	/**
+	 * redis 测试
+	 * @return
+	 */
+	@RequestMapping("/redis")
+	public String redis(String key){
+		//redisUtils.set("lalala", "haha");
+		
+		String pwd = redisUtils.get(key).toString();
+		return pwd;
+	}
+	
+	/**
+	 * redis 测试
+	 * @return
+	 */
+	@RequestMapping("/redis2")
+	public String redis2(String key){
+		//redisUtils.set("lalala", "haha");
+		
+		String pwd = redisOpt.getValue(key);
+		return pwd;
+	}
+	
+	/**
+	 * redis 测试
+	 * @return
+	 */
+	@RequestMapping("/setValue")
+	public String setValue(String key,String value){
+		redisOpt.setKey(key, value);
+		
+		return "success";
 	}
 }
