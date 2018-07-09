@@ -24,8 +24,8 @@
 		<java.version>1.8</java.version>
 
 		<!-- docker image name -->
-		<docker.image.prefix>wen</docker.image.prefix>
-		<docker.host>http://172.119.0.27:2375</docker.host>
+		<docker.image.prefix>registry.cn-qingdao.aliyuncs.com/vincent_lalala</docker.image.prefix>
+		<docker.host>http://117.48.211.117:2375</docker.host>
 	</properties>
 
 	<dependencies>
@@ -151,9 +151,9 @@
 				<configuration>
 					<serverId>wenDocker</serverId>
 					<pushImage>true</pushImage>
-					<registryUrl>172.119.0.27:5005</registryUrl>
+					<registryUrl>registry.cn-qingdao.aliyuncs.com</registryUrl>
 					<imageName>${docker.image.prefix}:${project.version}</imageName>
-					<dockerDirectory>src/main/docker</dockerDirectory>
+					<!-- <dockerDirectory>src/main/docker</dockerDirectory> -->
 					<dockerHost>${docker.host}</dockerHost>
 					<dockerDirectory>target/docker</dockerDirectory>
 					<imageTags>
