@@ -2,6 +2,8 @@ package com.vin.web;
 
 import java.util.List;
 
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
+import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import com.vin.core.redis.RedisOpt;
 import com.vin.core.redis.RedisUtils;
 import com.vin.entity.BaseUser;
 import com.vin.service.BaseService;
+import com.vin.service.webservice.CxfService;
 
 @RestController
 public class LoginController {
@@ -89,5 +92,45 @@ public class LoginController {
 		redisOpt.setKey(key, value);
 		
 		return "success";
+	}
+	
+	/**
+	 * webservice 测试
+	 * @return
+	 */
+	@RequestMapping("/wsHello")
+	public String wsHello(String vv){
+		try {
+
+            // 接口地址
+            String address = "http://localhost:8098/services/ws?wsdl";
+            
+			////********* 方式一 *******************
+            // 代理工厂
+            JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+            // 设置代理地址
+            jaxWsProxyFactoryBean.setAddress(address);
+            // 设置接口类型
+            jaxWsProxyFactoryBean.setServiceClass(CxfService.class);
+            // 创建一个代理接口实现
+            CxfService cs = (CxfService) jaxWsProxyFactoryBean.create();
+            // 调用代理接口的方法调用并返回结果
+            String result = cs.Hello(vv);
+            System.out.println("返回结果:" + result);
+            
+            
+			////********* 方式二 *******************
+            JaxWsDynamicClientFactory dcf =JaxWsDynamicClientFactory.newInstance();
+	        org.apache.cxf.endpoint.Client client =dcf.createClient(address);
+	        String param = vv;
+	        Object[] objects=client.invoke("Hello",param);
+	        //输出调用结果
+	        System.out.println("=============================="+objects[0].toString());
+            
+    		return result+";"+objects[0].toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
 	}
 }
