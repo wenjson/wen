@@ -31,7 +31,8 @@ public class CxfConfig {
  
     /**
      * 配置发布服务名称，默认为 services
-     * 【注意】 会影响路径,在application配置文件中配置 cxf.path=/yourpath
+     * 【注意】 会影响路径
+     * 可在application配置文件中配置 cxf.path=/yourpath
      * @return
      */
     /*@Bean
