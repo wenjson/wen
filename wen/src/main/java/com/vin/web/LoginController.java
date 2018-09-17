@@ -6,7 +6,10 @@ import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vin.core.redis.RedisOpt;
@@ -14,6 +17,9 @@ import com.vin.core.redis.RedisUtils;
 import com.vin.entity.BaseUser;
 import com.vin.service.BaseService;
 import com.vin.service.webservice.CxfService;
+
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class LoginController {
@@ -98,12 +104,14 @@ public class LoginController {
 	 * webservice 测试
 	 * @return
 	 */
-	@RequestMapping("/wsHello")
+	@ApiOperation(value="webservice测试", notes="传值输出")
+	@ApiImplicitParam(name = "vv", value = "参数，字符串", required = true, dataType = "String")
+	@GetMapping("/wsHello")
 	public String wsHello(String vv){
 		try {
 
             // 接口地址
-            String address = "http://localhost:8098/services/ws?wsdl";
+            String address = "http://localhost:8098/webservice/ws?wsdl";
             
 			////********* 方式一 *******************
             // 代理工厂
