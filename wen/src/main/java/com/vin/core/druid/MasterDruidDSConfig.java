@@ -34,8 +34,7 @@ public class MasterDruidDSConfig {
 	// 精确到 master 目录，以便跟其他数据源隔离
 	static final String PACKAGE = "com.vin.dao";
 	// mybatis-config.xml 配置
-	@Value("${mybatis.config-location}")
-	private String MYBATIS_CONFIG;
+	private String MYBATIS_CONFIG = "mybatis/mybatis-config.xml";
 	static final String MAPPER_LOCATION = "classpath:mybatis/master/*/*.xml";
 
 	@Value("${master.datasource.url}")
@@ -93,6 +92,7 @@ public class MasterDruidDSConfig {
 	@Value("{spring.datasource.connectionProperties}")
 	private String connectionProperties;*/
 	
+	/**方式二*/
 	@Autowired
 	DruidProperties druiProperties;
 
