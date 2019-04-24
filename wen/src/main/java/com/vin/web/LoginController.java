@@ -36,7 +36,7 @@ public class LoginController {
 	@Value("${file_base_path}")
 	private String filePath;
 	
-	@RequestMapping("/")
+	@RequestMapping("/hello")
 	public String index(){
 		return "Hello World!";
 	}
